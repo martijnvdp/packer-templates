@@ -1,4 +1,3 @@
-
 source "vsphere-iso" "centos" {
   CPUs                 = var.vm-cpu-num
   RAM                  = var.vm-mem-size
