@@ -1,5 +1,8 @@
 ## packer-templates
 
+packer templates for vmware:
+- Rocky 8.5
+
 example deploy rocky template on vsphere from powershell:
 ```hcl
 # enter virtual center username and password:
