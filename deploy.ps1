@@ -1,8 +1,9 @@
 param(
     [pscredential]$credential
 )
-#$buildVarFile=variables/build/vsphere.pkrvars.hcl
-$buildVarFile="../vars/vsphere.pkrvars.hcl"
+
+$buildVarFile = "variables/build/vsphere.pkrvars.hcl"
+
 if (!$credential) { $credential = get-credential }
 
 packer init .
