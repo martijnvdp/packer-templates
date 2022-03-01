@@ -97,5 +97,4 @@ build {
 
   provisioner "windows-restart" {
   }
-
 }

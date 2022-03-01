@@ -1,5 +1,4 @@
 # Init config and vmware tools installation for winrm 
-
 param(
     [string]$ip,
     [string]$gw,
