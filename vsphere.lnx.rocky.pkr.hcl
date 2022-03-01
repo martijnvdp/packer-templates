@@ -1,6 +1,6 @@
-source "vsphere-iso" "rocky" {
-  CPUs                 = var.vm-cpu-num
-  RAM                  = var.vm-mem-size
+source "vsphere-iso" "lnx-rocky-85" {
+  CPUs                 = var.vm_cpu_num
+  RAM                  = var.vm_mem_size
   RAM_reserve_all      = true
   boot_command         = ["e<down><down><end><bs><bs><bs><bs><bs>inst.text inst.ks=cdrom:/dev/sr1:/ks.cfg<leftCtrlOn>x<leftCtrlOff>"]
   boot_wait            = "4s"
@@ -11,18 +11,19 @@ source "vsphere-iso" "rocky" {
   create_snapshot      = "false"
   datacenter           = var.vcenter_datacenter
   datastore            = var.vcenter_datastore
-  disk_controller_type = ["pvscsi"]
+  disk_controller_type = ["lsilogic-sas"]
   firmware             = "efi-secure"
   folder               = var.vcenter_folder
   guest_os_type        = "centos8_64Guest"
   insecure_connection  = "true"
   iso_checksum         = "${var.iso_checksum_type}:${var.iso_checksum}"
-  iso_url              = var.iso_urls
+  iso_url              = var.iso_url
+  iso_target_path      = var.iso_target_path
   network_adapters {
     network      = var.vcenter_network
     network_card = "vmxnet3"
   }
-  notes                  = "${var.vm-notes}\nDefault SSH User: ${var.ssh_username}\nDefault SSH Pass: ${var.ssh_password}\nBuilt by Packer @ {{isotime \"2006-01-02 03:04\"}}."
+  notes                  = "${var.vm_notes}\nDefault SSH User: ${var.ssh_username}\nDefault SSH Pass: ${var.ssh_password}\nBuilt by Packer @ {{isotime \"2006-01-02 03:04\"}}."
   password               = var.vcenter_password
   shutdown_command       = "echo 'ubuntu'|sudo -S shutdown -P now"
   ssh_handshake_attempts = "100000"
@@ -30,7 +31,7 @@ source "vsphere-iso" "rocky" {
   ssh_timeout            = "40m"
   ssh_username           = var.ssh_username
   storage {
-    disk_size             = var.vm-disk-size
+    disk_size             = var.vm_disk_size
     disk_thin_provisioned = true
   }
   username       = var.vcenter_username
@@ -39,7 +40,7 @@ source "vsphere-iso" "rocky" {
 }
 
 build {
-  sources = ["source.vsphere-iso.rocky"]
+  sources = ["source.vsphere-iso.lnx-rocky-85"]
 
   provisioner "shell" {
     execute_command = "echo 'packer'|{{ .Vars }} sudo -S -E bash '{{ .Path }}'"
@@ -63,5 +64,10 @@ packer {
       version = ">= 1.0.3"
       source  = "github.com/hashicorp/vsphere"
     }
+    windows-update = {
+      version = "0.14.0"
+      source  = "github.com/rgl/windows-update"
+    }
   }
 }
+
