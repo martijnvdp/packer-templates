@@ -2,12 +2,16 @@
 
 packer templates for vmware:
 - Rocky 8.5
+- Windows 2019 core/standard
 
 example deploy rocky template on vsphere from powershell:
 ```hcl
 # enter virtual center username and password:
 $Credential = get-credential 
-packer build --only vsphere-iso.rocky --var-file=variables/build/vsphere.pkrvars.hcl --var-file=variables/os/rocky.8.5.pkrvars.hcl -var "vcenter_username=$($Credential.username)"  -var "vcenter_password=$($Credential.GetNetworkCredential().Password)" .
+packer build --only vsphere-iso.lnx-rocky-85 `
+--var-file=variables/build/vsphere.pkrvars.hcl `
+--var-file=variables/os/vsphere-iso.lnx-rocky-85.pkrvars.hcl `
+-var "vcenter_username=$($Credential.username)"  -var "vcenter_password=$($Credential.GetNetworkCredential().Password)" .
 ```
 
 ## template deployment powershell script
