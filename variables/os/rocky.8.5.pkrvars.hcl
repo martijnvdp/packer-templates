@@ -1,0 +1,12 @@
+vm_name           = "Rocky-8-5-Template"
+vm-notes          = "Rocky 8.5 Server Template EFI"
+vm-cpu-num        = 2
+vm-mem-size       = 4096
+vm-disk-size      = 40480
+iso_urls          = "http://download.rockylinux.org/pub/rocky/8.5/isos/x86_64/Rocky-8.5-x86_64-minimal.iso"
+iso_checksum_type = "sha256"
+iso_checksum      = "4eb2ae6b06876205f2209e4504110fe4115b37540c21ecfbbc0ebc11084cb779"
+iso_target_name   = "Rocky-8.5-x86_64-minimal.iso"
+ssh_username      = "root"
+ssh_password      = "packer"
+os_type           = "linux"
