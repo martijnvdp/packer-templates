@@ -1,1 +1,8 @@
-packer build --only vsphere.iso.centos --var-file=variables/build/vsphere.pkrvars.hcl --var-file=variables/os/centos.8.5.pkrvars.hcl .
+param(
+    [pscredential]$credential
+)
+
+$buildVarFile=variables/build/vsphere.pkrvars.hcl
+if (!$credential) { $credential = get-credential }
+
+packer build --only vsphere-iso.centos --var-file=$buildVarFile --var-file=variables/os/centos.8.5.pkrvars.hcl -var "vcenter_username=$($Credential.username)"  -var "vcenter_password=$($Credential.GetNetworkCredential().Password)" .
