@@ -1,10 +1,10 @@
-source "vsphere-iso" "centos" {
+source "vsphere-iso" "rocky" {
   CPUs                 = var.vm-cpu-num
   RAM                  = var.vm-mem-size
   RAM_reserve_all      = true
   boot_command         = ["e<down><down><end><bs><bs><bs><bs><bs>inst.text inst.ks=cdrom:/dev/sr1:/ks.cfg<leftCtrlOn>x<leftCtrlOff>"]
   boot_wait            = "3s"
-  cd_files             = ["${path.root}/bootconfig/centos/ks.cfg"]
+  cd_files             = ["${path.root}/bootconfig/rocky/ks.cfg"]
   cd_label             = "cidata"
   cluster              = var.vcenter_cluster
   convert_to_template  = "true"
@@ -14,11 +14,10 @@ source "vsphere-iso" "centos" {
   disk_controller_type = ["pvscsi"]
   firmware             = "efi-secure"
   folder               = var.vcenter_folder
-  guest_os_type        = "centos8_64Guest"
+  guest_os_type        = "rocky8_64Guest"
   insecure_connection  = "true"
   iso_checksum         = "${var.iso_checksum_type}:${var.iso_checksum}"
   iso_url              = var.iso_urls
-  iso_target_path      = var.iso_target_path
   network_adapters {
     network      = var.vcenter_network
     network_card = "vmxnet3"
@@ -40,7 +39,7 @@ source "vsphere-iso" "centos" {
 }
 
 build {
-  sources = ["source.vsphere-iso.centos"]
+  sources = ["source.vsphere-iso.rocky"]
 
   provisioner "shell" {
     execute_command = "echo 'packer'|{{ .Vars }} sudo -S -E bash '{{ .Path }}'"
@@ -48,7 +47,7 @@ build {
   }
 
   provisioner "ansible-local" {
-    playbook_file = "${path.root}/playbooks/setup-centos.yml"
+    playbook_file = "${path.root}/playbooks/setup-rocky.yml"
   }
 
   provisioner "shell" {
