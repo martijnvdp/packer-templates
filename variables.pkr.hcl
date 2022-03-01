@@ -15,6 +15,10 @@ variable "iso_target_name" {
   type = string
 }
 
+variable "iso_target_path" {
+  type = string
+}
+
 variable "ssh_username" {
   type    = string
   default = "root"

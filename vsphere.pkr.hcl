@@ -4,7 +4,7 @@ source "vsphere-iso" "centos" {
   RAM_reserve_all      = true
   boot_command         = ["e<down><down><end><bs><bs><bs><bs><bs>inst.text inst.ks=cdrom:/dev/sr1:/ks.cfg<leftCtrlOn>x<leftCtrlOff>"]
   boot_wait            = "3s"
-  cd_files             = ["${path.root}/iso/ks.cfg"]
+  cd_files             = ["${path.root}/bootconfig/centos/ks.cfg"]
   cd_label             = "cidata"
   cluster              = var.vcenter_cluster
   convert_to_template  = "true"
@@ -18,6 +18,7 @@ source "vsphere-iso" "centos" {
   insecure_connection  = "true"
   iso_checksum         = "${var.iso_checksum_type}:${var.iso_checksum}"
   iso_url              = var.iso_urls
+  iso_target_path      = var.iso_target_path
   network_adapters {
     network      = var.vcenter_network
     network_card = "vmxnet3"
@@ -53,5 +54,15 @@ build {
   provisioner "shell" {
     execute_command = "echo 'packer'|{{ .Vars }} sudo -S -E bash '{{ .Path }}'"
     scripts         = ["${path.root}/scripts/cleanup.sh"]
+  }
+}
+
+packer {
+  required_version = ">= 1.7.0"
+  required_plugins {
+    vsphere = {
+      version = ">= 1.0.3"
+      source  = "github.com/hashicorp/vsphere"
+    }
   }
 }

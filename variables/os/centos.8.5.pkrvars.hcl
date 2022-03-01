@@ -7,6 +7,7 @@ iso_urls          = "https://vault.centos.org/8.5.2111/isos/x86_64/CentOS-8.5.21
 iso_checksum_type = "sha256"
 iso_checksum      = "3b795863001461d4f670b0dedd02d25296b6d64683faceb8f2b60c53ac5ebb3e"
 iso_target_name   = "CentOS-8-5-x86_64-2111"
+iso_target_path   = "[] _ISO/CentOS-8.5.2111-x86_64-dvd1.iso"
 ssh_username      = "root"
 ssh_password      = "packer"
 os_type           = "linux"
