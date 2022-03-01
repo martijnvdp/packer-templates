@@ -3,7 +3,7 @@ source "vsphere-iso" "rocky" {
   RAM                  = var.vm-mem-size
   RAM_reserve_all      = true
   boot_command         = ["e<down><down><end><bs><bs><bs><bs><bs>inst.text inst.ks=cdrom:/dev/sr1:/ks.cfg<leftCtrlOn>x<leftCtrlOff>"]
-  boot_wait            = "3s"
+  boot_wait            = "4s"
   cd_files             = ["${path.root}/bootconfig/rocky/ks.cfg"]
   cd_label             = "cidata"
   cluster              = var.vcenter_cluster
