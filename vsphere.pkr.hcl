@@ -14,7 +14,7 @@ source "vsphere-iso" "rocky" {
   disk_controller_type = ["pvscsi"]
   firmware             = "efi-secure"
   folder               = var.vcenter_folder
-  guest_os_type        = "rocky8_64Guest"
+  guest_os_type        = "centos8_64Guest"
   insecure_connection  = "true"
   iso_checksum         = "${var.iso_checksum_type}:${var.iso_checksum}"
   iso_url              = var.iso_urls
