@@ -4,7 +4,7 @@ source "vsphere-iso" "centos" {
   RAM_reserve_all      = true
   boot_command         = ["e<down><down><end><bs><bs><bs><bs><bs>inst.text inst.ks=cdrom:/dev/sr1:/ks.cfg<leftCtrlOn>x<leftCtrlOff>"]
   boot_wait            = "3s"
-  cd_files             = ["${path.root}/http/ks.cfg"]
+  cd_files             = ["${path.root}/iso/ks.cfg"]
   cd_label             = "cidata"
   cluster              = var.vcenter_cluster
   convert_to_template  = "true"
