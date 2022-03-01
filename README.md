@@ -19,6 +19,13 @@ $Credential = get-credential
 deploy.ps1 -credential $credential
 ```
 
+example all templates on vsphere with the deploy.ps1 script:
+```hcl
+# enter virtual center username and password:
+$Credential = get-credential 
+deploy.ps1 -credential $credential -all
+```
+
 ## requirements
 packer - https://www.packer.io/
 

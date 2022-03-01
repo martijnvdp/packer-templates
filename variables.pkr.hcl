@@ -1,4 +1,4 @@
-variable "iso_urls" {
+variable "iso_url" {
   type = string
 }
 
@@ -11,7 +11,7 @@ variable "iso_checksum" {
   type = string
 }
 
-variable "iso_target_name" {
+variable "iso_target_path" {
   type = string
 }
 
@@ -76,21 +76,39 @@ variable "vm_name" {
   type = string
 }
 
-variable "vm-notes" {
+variable "vm_notes" {
   type = string
 }
 
-variable "vm-cpu-num" {
+variable "vm_cpu_num" {
   type    = number
   default = 2
 }
 
-variable "vm-mem-size" {
+variable "vm_mem_size" {
   type    = number
   default = 4096
 }
 
-variable "vm-disk-size" {
+variable "vm_disk_size" {
   type = number
+}
 
+#####################################################
+# windows
+#####################################################
+
+variable "os_wsus_server" {
+  type    = string
+  default = ""
+}
+
+variable "os_wsus_group" {
+  type    = string
+  default = ""
+}
+
+variable "os_edition" {
+  type    = string
+  default = "standard"
 }
