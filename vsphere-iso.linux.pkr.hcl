@@ -23,6 +23,7 @@ source "vsphere-iso" "linux" {
   RAM                    = var.vm_mem_size
   RAM_reserve_all        = true
   shutdown_command       = "echo 'ubuntu'|sudo -S shutdown -P now"
+  shutdown_timeout       = "15m"
   ssh_handshake_attempts = "100000"
   ssh_password           = var.ssh_password
   ssh_timeout            = "40m"
