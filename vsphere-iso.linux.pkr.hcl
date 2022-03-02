@@ -1,8 +1,8 @@
-source "vsphere-iso" "lnx-rocky-85" {
+source "vsphere-iso" "linux" {
   vm_name                = var.vm_name
   boot_command           = ["e<down><down><end><bs><bs><bs><bs><bs>inst.text inst.ks=cdrom:/dev/sr1:/ks.cfg<leftCtrlOn>x<leftCtrlOff>"]
   boot_wait              = "4s"
-  cd_files               = ["${path.root}/bootconfig/rocky/ks.cfg"]
+  cd_files               = ["${path.root}/bootconfig/${var.linux_distro}/ks.cfg"]
   cd_label               = "cidata"
   cluster                = var.vcenter_cluster
   convert_to_template    = "true"
@@ -84,7 +84,7 @@ source "vsphere-iso" "lnx-rocky-85" {
 }
 
 build {
-  sources = ["source.vsphere-iso.lnx-rocky-85"]
+  sources = ["source.vsphere-iso.linux"]
 
   provisioner "shell" {
     execute_command = "echo 'packer'|{{ .Vars }} sudo -S -E bash '{{ .Path }}'"
@@ -92,11 +92,11 @@ build {
   }
 
   provisioner "ansible-local" {
-    playbook_file = "${path.root}/playbooks/setup-rocky.yml"
+    playbook_file = "${path.root}/playbooks/setup.yml"
   }
 
   provisioner "shell" {
     execute_command = "echo 'packer'|{{ .Vars }} sudo -S -E bash '{{ .Path }}'"
-    scripts         = ["${path.root}/scripts/cleanup.sh"]
+    scripts         = ["${path.root}/scripts/linux/cleanup.sh"]
   }
 }
