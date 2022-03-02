@@ -19,18 +19,6 @@ variable "iso_target_path" {
   type        = string
 }
 
-variable "ssh_username" {
-  type        = string
-  description = "ssh username"
-  default     = "root"
-}
-
-variable "ssh_password" {
-  type        = string
-  description = "ssh password"
-  default     = "packer"
-}
-
 #####################################################
 # vsphere-iso 
 #####################################################
@@ -81,9 +69,19 @@ variable "vm_notes" {
   type = string
 }
 
+variable "vm_boot_commands" {
+  type    = list(string)
+  default = []
+}
+
 variable "vm_cpu_num" {
   type    = number
   default = 2
+}
+
+variable "vm_guest_os_type" {
+  type    = string
+  default = "windows9Server64Guest"
 }
 
 variable "vm_mem_size" {
@@ -131,4 +129,16 @@ variable "linux_distro" {
   type        = string
   description = "Windows Server version"
   default     = "rocky"
+}
+
+variable "ssh_username" {
+  type        = string
+  description = "ssh username"
+  default     = "root"
+}
+
+variable "ssh_password" {
+  type        = string
+  description = "ssh password"
+  default     = "packer"
 }

@@ -1,4 +1,3 @@
-# use powershell get-filehash for checksum
 vm_name           = "Windows-2019-Template-CORE"
 vm_notes          = "Windows 2019 CORE template without gui EFI"
 vm_cpu_num        = "2"
@@ -10,4 +9,3 @@ iso_checksum      = "549BCA46C055157291BE6C22A3AAAED8330E78EF4382C99EE82C896426A
 iso_checksum_type = "sha256"
 windows_edition   = "core"
 windows_version   = "2019"
-

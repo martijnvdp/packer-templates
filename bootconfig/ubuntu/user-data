@@ -1,0 +1,42 @@
+#cloud-config
+autoinstall:
+    version: 1
+    early-commands:
+        # Stop ssh for packer
+        - sudo systemctl stop ssh
+    locale: en_US
+    keyboard:
+        layout: en
+        variant: us
+    identity:
+        hostname: ubuntu-server
+        username: ubuntu
+        password: $6$yV./p0CXmpUSsU1c$gXKXP/7hpiIyQKEl0yV5OH9/82vXQ9QdPz2heaf6fPA6OOuh1aERzzCv2573x0tVU/Rx7ZjIk6M022AFRZDf2.
+    ssh:
+        install-server: yes
+        allow-pw: yes
+    storage:
+        layout:
+            name: direct
+    apt:
+        primary:
+            - arches: [i386, amd64]
+              uri: "http://ro.archive.ubuntu.com/ubuntu/"
+    user-data:
+        disable_root: false
+        hostname: ubuntu-server
+        preserve_hostname: false
+        lock-passwd: false
+        ssh_pwauth: true
+        hostname: ubuntu2004
+        password: $6$yV./p0CXmpUSsU1c$gXKXP/7hpiIyQKEl0yV5OH9/82vXQ9QdPz2heaf6fPA6OOuh1aERzzCv2573x0tVU/Rx7ZjIk6M022AFRZDf2.
+        username: ubuntu
+        timezone: Europe/Amsterdam
+    late-commands:
+      - sed -i -e 's/^#\?PasswordAuthentication.*/PasswordAuthentication yes/g' /target/etc/ssh/sshd_config
+      - sed -i -e 's/^#\?PermitRootLogin.*/PermitRootLogin yes/g' /target/etc/ssh/sshd_config
+      - echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/ubuntu
+      - curtin in-target --target=/target -- chmod 440 /etc/sudoers.d/ubuntu
+      - curtin in-target --target=/target -- apt-get update
+      - curtin in-target --target=/target -- apt-get upgrade --yes
+      - curtin in-target --target=/target -- apt-get install ansible --yes

@@ -11,9 +11,9 @@ source "vsphere-iso" "windows" {
   datastore            = var.vcenter_datastore
   disk_controller_type = ["lsilogic-sas"]
   firmware             = "efi-secure"
-  floppy_files         = ["${path.root}/bootconfig/${var.windows_version}/${var.windows_edition}/autounattend.xml", "${path.root}/scripts/windows/boot_init.ps1"]
+  floppy_files         = ["${path.root}/bootconfig/${var.windows_version}/${var.windows_edition}/autounattend.xml", "${path.root}/scripts/windows/boot.ps1"]
   folder               = var.vcenter_folder
-  guest_os_type        = "windows9Server64Guest"
+  guest_os_type        = var.vm_guest_os_type
   insecure_connection  = "true"
   iso_checksum         = "${var.iso_checksum_type}:${var.iso_checksum}"
   iso_paths            = ["[] /vmimages/tools-isoimages/windows.iso"]
@@ -23,6 +23,7 @@ source "vsphere-iso" "windows" {
   password             = var.vcenter_password
   RAM                  = var.vm_mem_size
   RAM_reserve_all      = true
+  remove_cdrom         = true
   shutdown_timeout     = "15m"
   tools_upgrade_policy = true
   username             = var.vcenter_username
@@ -93,7 +94,7 @@ build {
 
   provisioner "powershell" {
     environment_vars = ["wsus_server=${var.os_wsus_server}", "wsus_server=${var.os_wsus_group}"]
-    scripts          = ["${path.root}/scripts/windows/settings.ps1"]
+    scripts          = ["${path.root}/scripts/windows/pre.ps1"]
   }
 
   provisioner "windows-update" {
