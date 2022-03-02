@@ -3,6 +3,7 @@
 packer templates for vmware:
 - Rocky 8.5
 - Windows 2019 core/standard
+- Windows 2022 core/standard
 
 example deploy rocky template on vsphere from powershell:
 ```hcl
