@@ -23,6 +23,7 @@ source "vsphere-iso" "windows" {
   password             = var.vcenter_password
   RAM                  = var.vm_mem_size
   RAM_reserve_all      = true
+  shutdown_timeout     = "15m"
   tools_upgrade_policy = true
   username             = var.vcenter_username
   vcenter_server       = var.vcenter_server
@@ -100,5 +101,6 @@ build {
   }
 
   provisioner "windows-restart" {
+    restart_timeout = "30m"
   }
 }
