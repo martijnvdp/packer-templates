@@ -1,12 +1,45 @@
 source "vsphere-iso" "windows-2019" {
-  CPUs            = var.vm_cpu_num
-  RAM             = var.vm_mem_size
-  RAM_reserve_all = true
-  boot_command    = ["<tab><wait><enter><wait>", "a<wait>a<wait>a<wait>a<wait>a<wait>a<wait>"]
-  boot_wait       = "70s"
-  cdrom_type      = "sata"
-  cluster         = var.vcenter_cluster
-  communicator    = "winrm"
+  vm_name              = var.vm_name
+  boot_command         = ["<tab><wait><enter><wait>", "a<wait>a<wait>a<wait>a<wait>a<wait>a<wait>"]
+  boot_wait            = "70s"
+  cdrom_type           = "sata"
+  cluster              = var.vcenter_cluster
+  communicator         = "winrm"
+  convert_to_template  = "true"
+  CPUs                 = var.vm_cpu_num
+  datacenter           = var.vcenter_datacenter
+  datastore            = var.vcenter_datastore
+  disk_controller_type = ["lsilogic-sas"]
+  firmware             = "efi-secure"
+  floppy_files         = ["${path.root}/bootconfig/2019/${var.os_edition}/autounattend.xml", "${path.root}/scripts/2019/boot_init.ps1"]
+  folder               = var.vcenter_folder
+  guest_os_type        = "windows9Server64Guest"
+  insecure_connection  = "true"
+  iso_checksum         = "${var.iso_checksum_type}:${var.iso_checksum}"
+  iso_paths            = ["[] /vmimages/tools-isoimages/windows.iso"]
+  iso_url              = var.iso_url
+  iso_target_path      = var.iso_target_path
+  notes                = "${var.vm_notes}\nDefault User: Administrator\nDefault Pass: packer\nBuilt by Packer @ {{isotime \"2006-01-02 03:04\"}}."
+  password             = var.vcenter_password
+  RAM                  = var.vm_mem_size
+  RAM_reserve_all      = true
+  tools_upgrade_policy = true
+  username             = var.vcenter_username
+  vcenter_server       = var.vcenter_server
+  winrm_password       = "packer"
+  winrm_username       = "administrator"
+
+  network_adapters {
+    network      = var.vcenter_network
+    network_card = "vmxnet3"
+  }
+
+  storage {
+    disk_size             = var.vm_disk_size
+    disk_thin_provisioned = true
+  }
+
+  # VM Hardening settings
   configuration_parameters = {
     "RemoteDisplay.vnc.enabled"                        = "false"
     "isolation.bios.bbs.disable"                       = "true"
@@ -47,35 +80,6 @@ source "vsphere-iso" "windows-2019" {
     "tools.guestlib.enableHostInfo"                    = "false"
     "tools.setInfo.sizeLimit"                          = "1048576"
   }
-  convert_to_template  = "true"
-  datacenter           = var.vcenter_datacenter
-  datastore            = var.vcenter_datastore
-  disk_controller_type = ["lsilogic-sas"]
-  firmware             = "efi-secure"
-  floppy_files         = ["${path.root}/bootconfig/2019/${var.os_edition}/autounattend.xml", "${path.root}/scripts/2019/boot_init.ps1"]
-  folder               = var.vcenter_folder
-  guest_os_type        = "windows9Server64Guest"
-  insecure_connection  = "true"
-  iso_checksum         = "${var.iso_checksum_type}:${var.iso_checksum}"
-  iso_paths            = ["[] /vmimages/tools-isoimages/windows.iso"]
-  iso_url              = var.iso_url
-  iso_target_path      = var.iso_target_path
-  network_adapters {
-    network      = var.vcenter_network
-    network_card = "vmxnet3"
-  }
-  notes    = "${var.vm_notes}\nDefault User: Administrator\nDefault Pass: packer\nBuilt by Packer @ {{isotime \"2006-01-02 03:04\"}}."
-  password = var.vcenter_password
-  storage {
-    disk_size             = var.vm_disk_size
-    disk_thin_provisioned = true
-  }
-  tools_upgrade_policy = true
-  username             = var.vcenter_username
-  vcenter_server       = var.vcenter_server
-  vm_name              = var.vm_name
-  winrm_password       = "packer"
-  winrm_username       = "administrator"
 }
 
 
