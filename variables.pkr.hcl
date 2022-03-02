@@ -1,29 +1,34 @@
 variable "iso_url" {
-  type = string
+  type        = string
+  description = "Installation ISO Source, URL/SMB/FILE"
 }
 
 variable "iso_checksum_type" {
-  type    = string
-  default = "sha256"
+  type        = string
+  description = "ISO checksum type"
+  default     = "sha256"
 }
 
 variable "iso_checksum" {
-  type = string
+  description = "ISO checksum, this can also be determined using the powershell get-filehash function"
+  type        = string
 }
 
 variable "iso_target_path" {
-  type = string
+  description = "ISO target path/name"
+  type        = string
 }
 
 variable "ssh_username" {
-  type    = string
-  default = "root"
-
+  type        = string
+  description = "ssh username"
+  default     = "root"
 }
 
 variable "ssh_password" {
-  type    = string
-  default = "packer"
+  type        = string
+  description = "ssh password"
+  default     = "packer"
 }
 
 variable "os_type" {
@@ -99,16 +104,19 @@ variable "vm_disk_size" {
 #####################################################
 
 variable "os_wsus_server" {
-  type    = string
-  default = ""
+  type        = string
+  description = "WSUS Server name for windows updates"
+  default     = ""
 }
 
 variable "os_wsus_group" {
-  type    = string
-  default = ""
+  type        = string
+  description = "WSUS Group for windows updates"
+  default     = ""
 }
 
 variable "os_edition" {
-  type    = string
-  default = "standard"
+  type        = string
+  description = "Windows Server edition core ore standard"
+  default     = "standard"
 }
