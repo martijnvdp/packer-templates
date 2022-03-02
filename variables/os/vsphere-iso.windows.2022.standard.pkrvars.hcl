@@ -1,4 +1,3 @@
-# use powershell get-filehash for checksum
 vm_name           = "Windows-2022-Template-Standard"
 vm_notes          = "Windows 2022 Standard template with gui EFI"
 vm_cpu_num        = "2"

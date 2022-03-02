@@ -1,8 +1,8 @@
 source "vsphere-iso" "linux" {
   vm_name                = var.vm_name
-  boot_command           = ["e<down><down><end><bs><bs><bs><bs><bs>inst.text inst.ks=cdrom:/dev/sr1:/ks.cfg<leftCtrlOn>x<leftCtrlOff>"]
+  boot_command           = var.vm_boot_commands
   boot_wait              = "4s"
-  cd_files               = ["${path.root}/bootconfig/${var.linux_distro}/ks.cfg"]
+  cd_files               = ["${path.root}/bootconfig/${var.linux_distro}/*"]
   cd_label               = "cidata"
   cluster                = var.vcenter_cluster
   convert_to_template    = "true"
@@ -13,7 +13,7 @@ source "vsphere-iso" "linux" {
   disk_controller_type   = ["lsilogic-sas"]
   firmware               = "efi-secure"
   folder                 = var.vcenter_folder
-  guest_os_type          = "centos8_64Guest"
+  guest_os_type          = var.vm_guest_os_type
   insecure_connection    = "true"
   iso_checksum           = "${var.iso_checksum_type}:${var.iso_checksum}"
   iso_url                = var.iso_url
@@ -22,6 +22,7 @@ source "vsphere-iso" "linux" {
   password               = var.vcenter_password
   RAM                    = var.vm_mem_size
   RAM_reserve_all        = true
+  remove_cdrom           = true
   shutdown_command       = "echo 'ubuntu'|sudo -S shutdown -P now"
   shutdown_timeout       = "15m"
   ssh_handshake_attempts = "100000"
@@ -89,15 +90,15 @@ build {
 
   provisioner "shell" {
     execute_command = "echo 'packer'|{{ .Vars }} sudo -S -E bash '{{ .Path }}'"
-    inline          = ["dnf -y update", "dnf -y install python3", "python3 -m pip install --upgrade pip", "alternatives --set python /usr/bin/python3", "pip3 install ansible"]
+    scripts         = ["${path.root}/scripts/${var.linux_distro}/pre.sh"]
   }
 
   provisioner "ansible-local" {
-    playbook_file = "${path.root}/playbooks/setup.yml"
+    playbook_file = "${path.root}/playbooks/${var.linux_distro}/setup.yml"
   }
 
   provisioner "shell" {
     execute_command = "echo 'packer'|{{ .Vars }} sudo -S -E bash '{{ .Path }}'"
-    scripts         = ["${path.root}/scripts/linux/cleanup.sh"]
+    scripts         = ["${path.root}/scripts/${var.linux_distro}/post.sh"]
   }
 }

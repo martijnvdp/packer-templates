@@ -1,4 +1,3 @@
-# use powershell get-filehash for checksum
 vm_name           = "Windows-2022-Template-Core"
 vm_notes          = "Windows 2022 Core template without gui EFI"
 vm_cpu_num        = "2"
@@ -10,4 +9,3 @@ iso_checksum      = "4F1457C4FE14CE48C9B2324924F33CA4F0470475E6DA851B39CCBF98F44
 iso_checksum_type = "sha256"
 windows_edition   = "core"
 windows_version   = "2022"
-
