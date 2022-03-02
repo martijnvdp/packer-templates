@@ -31,10 +31,6 @@ variable "ssh_password" {
   default     = "packer"
 }
 
-variable "os_type" {
-  type = string
-}
-
 #####################################################
 # vsphere-iso 
 #####################################################
@@ -115,8 +111,24 @@ variable "os_wsus_group" {
   default     = ""
 }
 
-variable "os_edition" {
+variable "windows_edition" {
   type        = string
-  description = "Windows Server edition core ore standard"
+  description = "Windows Server edition core or standard"
   default     = "standard"
+}
+
+variable "windows_version" {
+  type        = string
+  description = "Windows Server version"
+  default     = "2019"
+}
+
+#####################################################
+# Linux
+#####################################################
+
+variable "linux_distro" {
+  type        = string
+  description = "Windows Server version"
+  default     = "rocky"
 }

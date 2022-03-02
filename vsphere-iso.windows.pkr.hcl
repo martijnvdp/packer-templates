@@ -1,4 +1,4 @@
-source "vsphere-iso" "windows-2019" {
+source "vsphere-iso" "windows" {
   vm_name              = var.vm_name
   boot_command         = ["<tab><wait><enter><wait>", "a<wait>a<wait>a<wait>a<wait>a<wait>a<wait>"]
   boot_wait            = "70s"
@@ -11,7 +11,7 @@ source "vsphere-iso" "windows-2019" {
   datastore            = var.vcenter_datastore
   disk_controller_type = ["lsilogic-sas"]
   firmware             = "efi-secure"
-  floppy_files         = ["${path.root}/bootconfig/2019/${var.os_edition}/autounattend.xml", "${path.root}/scripts/2019/boot_init.ps1"]
+  floppy_files         = ["${path.root}/bootconfig/${var.windows_version}/${var.windows_edition}/autounattend.xml", "${path.root}/scripts/windows/boot_init.ps1"]
   folder               = var.vcenter_folder
   guest_os_type        = "windows9Server64Guest"
   insecure_connection  = "true"
@@ -84,7 +84,7 @@ source "vsphere-iso" "windows-2019" {
 
 
 build {
-  sources = ["source.vsphere-iso.windows-2019"]
+  sources = ["source.vsphere-iso.windows"]
 
   provisioner "windows-shell" {
     inline = ["ipconfig"]
@@ -92,7 +92,7 @@ build {
 
   provisioner "powershell" {
     environment_vars = ["wsus_server=${var.os_wsus_server}", "wsus_server=${var.os_wsus_group}"]
-    scripts          = ["${path.root}/scripts/2019/settings.ps1"]
+    scripts          = ["${path.root}/scripts/windows/settings.ps1"]
   }
 
   provisioner "windows-update" {
