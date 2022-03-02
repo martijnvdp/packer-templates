@@ -2,6 +2,7 @@
 
 packer templates for vmware:
 - Rocky 8.5
+- Ubuntu 20.04.4
 - Windows 2019 core/standard
 - Windows 2022 core/standard
 
