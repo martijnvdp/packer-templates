@@ -77,6 +77,13 @@
           - vim
           - wget
           - openssh-clients
+          - realmd 
+          - oddjob
+          - oddjob-mkhomedir 
+          - sssd 
+          - adcli 
+          - krb5-workstation
+
       when: ansible_os_family == "RedHat"
 
     - name: Install open-vm-tools (RedHat)
