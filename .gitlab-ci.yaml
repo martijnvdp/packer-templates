@@ -1,0 +1,37 @@
+# Gitlab ci/cd pipeline example for deploying templates to vmware
+# use -force to replace existing templates
+
+stages:
+  - fmt
+  - validate 
+  - build
+
+format_code:
+  stage: fmt
+  script:
+    - echo "formatting packer files"
+    - packer fmt -recursive .
+
+validate_windows-2022-core:
+  stage: validate
+  script:
+    - echo "validate Windows 2022 Core config"
+    - packer init .
+    - packer validate --only vsphere-iso.windows
+      --var-file variables/build/vsphere-iso.pkrvars.hcl
+      --var-file=variables/os/vsphere-iso.windows.2022.core.pkrvars.hcl 
+      -var "vcenter_username=username" 
+      -var "vcenter_password=password" .
+
+deploy_windows-2022-core:
+  stage: build
+  script:
+    - echo "Building Windows 2022 Core"
+    - packer init .
+    - packer build --only vsphere-iso.windows -force 
+      --var-file variables/build/vsphere-iso.pkrvars.hcl
+      --var-file=variables/os/vsphere-iso.windows.2022.core.pkrvars.hcl 
+      -var "vcenter_username=$username" 
+      -var "vcenter_password=$password" .
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
