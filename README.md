@@ -9,7 +9,7 @@ packer templates for vmware:
 
 ## template deployment powershell script
 
-example deploy templates on vsphere with the deploy.ps1 script:
+example deploy templates on vsphere with the deploy.ps1 script: <br>
 ( be sure to edit variables\build\vsphere-iso.pkrvars.hcl)
 ```hcl
 # enter virtual center username and password:
@@ -17,7 +17,7 @@ $Credential = get-credential
 deploy.ps1 -credential $credential
 ```
 
-choose from menu:
+and choose from menu:
 ```hcl
 1. vsphere-iso.linux.centos-9.pkrvars.hcl
 2. vsphere-iso.linux.rocky-85.pkrvars.hcl
