@@ -98,7 +98,13 @@ build {
   }
 
   provisioner "windows-update" {
-    filters = ["include:$true"]
+    filters = ["include:$_.Title -like '*Servicing Stack Update for Windows*'"]
+  }
+
+  provisioner "windows-restart" {
+  }
+
+  provisioner "windows-update" {
   }
 
   provisioner "windows-restart" {
