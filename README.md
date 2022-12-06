@@ -48,7 +48,7 @@ packer - https://www.packer.io/
 
 for the iso creation one of the following iso creators:
 - xorriso
-- mkisofs
+- mkisofs (https://sourceforge.net/projects/mkisofs-md5/files/latest/download)
 - hdiutil (normally found in macOS)
 - oscdimg (normally found in Windows as part of the Windows ADK)
 
